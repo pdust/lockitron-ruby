@@ -9,7 +9,7 @@ module Lockitron
 
     def self.all
       url = "#{LOCKS_URL}?access_token=#{access_token}"
-       @@locks ||= RestClient.get url do |response, request, result|
+       @@locks = RestClient.get url do |response, request, result|
         if response.code == 200
           JSON.parse(response.to_str)
         elsif response.code == 401
