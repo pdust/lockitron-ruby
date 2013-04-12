@@ -63,7 +63,8 @@ module Lockitron
       url = "#{LOCKS_URL}/#{lock_id}/"
       RestClient.post url, :access_token => access_token do |response|
         if response.code == 200
-          puts "Successfully #{direction.capitalize}ed #{lock['name'].capitalize}!"
+          puts "Got the status!"
+          puts response
           return response
         elsif response.code == 401
           invalid_access_token!
