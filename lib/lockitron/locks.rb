@@ -9,6 +9,7 @@ module Lockitron
 
     def self.all
       url = "#{LOCKS_URL}?access_token=#{access_token}"
+      puts url
        @@locks = RestClient.get url do |response, request, result|
         if response.code == 200
           JSON.parse(response.to_str)
@@ -71,7 +72,7 @@ module Lockitron
         elsif response.code == 401
           invalid_access_token!
         else
-          puts "An unknown error ocurred. Please send an email to jarred@lockitron.com and tell him what happened."
+          puts "An unknown error ocurred. Please send an email to jarred@lockitron.com and tell him what happened. Hello World, you should not see me."
         end
       end
     end
