@@ -90,7 +90,8 @@ module Lockitron
           puts "Got the status!"
           puts response["lock"]
           # puts response["lock"].["status"]
-          puts response["lock"]["status"]
+          puts response.lock
+          puts response.lock.status
           puts response["status"]
           return response
         elsif response.code == 401
