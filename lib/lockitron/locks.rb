@@ -56,6 +56,22 @@ module Lockitron
         return @@lock.first["lock"]
       end
     end
+    
+    def self.freshfind(lock_id)
+      
+      
+      url = "#{LOCKS_URL}/#{lock_id}/"
+      RestClient.post url, :access_token => access_token do |response|
+        if response.code == 200
+          puts "Successfully #{direction.capitalize}ed #{lock['name'].capitalize}!"
+          return response
+        elsif response.code == 401
+          invalid_access_token!
+        else
+          puts "An unknown error ocurred. Please send an email to jarred@lockitron.com and tell him what happened."
+        end
+      end
+    end
 
     def self.list
       access_token # Ensures that an access token has been selected
