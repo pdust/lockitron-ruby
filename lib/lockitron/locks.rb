@@ -37,11 +37,11 @@ module Lockitron
     
     
     def self.unlock_by_id(lock_id)
-      access(lock_id, "unlock")
+      access_by_id(lock_id, "unlock")
     end
 
     def self.lock_by_id(lock_id)
-      access(lock_id, "lock")
+      access_by_id(lock_id, "lock")
     end
 
     def self.access(lock, direction)
