@@ -89,7 +89,7 @@ module Lockitron
         if response.code == 200
           puts "Got the status!"
           puts response["status"]
-          return response["status"]
+          return response.["status"]
         elsif response.code == 401
           invalid_access_token!
         else
