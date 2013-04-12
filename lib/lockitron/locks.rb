@@ -34,6 +34,15 @@ module Lockitron
       @@lock = find(name)
       access(@@lock, "lock")
     end
+    
+    
+    def self.unlock_by_id(lock_id)
+      access(lock_id, "unlock")
+    end
+
+    def self.lock_by_id(lock_id)
+      access(lock_id, "lock")
+    end
 
     def self.access(lock, direction)
       url = "#{LOCKS_URL}/#{lock['id']}/#{direction}"
@@ -47,6 +56,21 @@ module Lockitron
         end
       end
     end
+    
+    
+    def self.access_by_id(lock_id, direction)
+      url = "#{LOCKS_URL}/#{lock_id}/#{direction}"
+      RestClient.post url, :access_token => access_token do |response|
+        if response.code == 200
+          puts "Successfully #{direction.capitalize}ed!"
+        elsif response.code == 401
+          invalid_access_token!
+        else
+          puts "An unknown error ocurred."
+        end
+      end
+    end
+    
 
     def self.find(name)
       @@lock = all.select { |lock| lock['lock']['name'] == name }
@@ -57,6 +81,23 @@ module Lockitron
         return @@lock.first["lock"]
       end
     end
+    
+    
+    def self.find_by_id(lock_id)
+      url = "#{LOCKS_URL}/#{lock_id}/"
+      RestClient.post url, :access_token => access_token do |response|
+        if response.code == 200
+          puts "Got the status!"
+          puts response
+          return response
+        elsif response.code == 401
+          invalid_access_token!
+        else
+          puts "An unknown error ocurred."
+        end
+      end
+    end
+    
     
     def self.freshfind(lock_id)
       
