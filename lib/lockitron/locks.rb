@@ -59,8 +59,10 @@ module Lockitron
     
     def self.freshfind(lock_id)
       
-      
+      puts "*******************************"
       url = "#{LOCKS_URL}/#{lock_id}/"
+      puts url
+      puts access_token
       RestClient.post url, :access_token => access_token do |response|
         if response.code == 200
           puts "Got the status!"
