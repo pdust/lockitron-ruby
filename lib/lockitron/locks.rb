@@ -83,25 +83,29 @@ module Lockitron
     end
     
     
-    # def self.status_by_id(lock_id)
-    #   url = "#{LOCKS_URL}/#{lock_id}/"
-    #   RestClient.post url, :access_token => access_token do |response|
-    #     if response.code == 200
-    #       puts "Got the status!"
-    #       puts response["lock"]
-    #       # puts response["lock"].["status"]
-    #       puts response.lock
-    #       puts response.lock.status
-    #       puts response["status"]
-    #       return response
-    #     elsif response.code == 401
-    #       invalid_access_token!
-    #     else
-    #       puts "An unknown error ocurred."
-    #     end
-    #   end
-    # end
-    # 
+    def self.status_by_id(lock_id)
+      url = "#{LOCKS_URL}/#{lock_id}/"
+      RestClient.post url, :access_token => access_token do |response|
+        if response.code == 200
+          
+          data = JSON.load response
+          lockdata = data["lock"]
+          
+          puts "Got the status!"
+          puts lockdata
+          # puts response["lock"].["status"]
+          # puts response.lock
+          #          puts response.lock.status
+          #          puts response["status"]
+          return response
+        elsif response.code == 401
+          invalid_access_token!
+        else
+          puts "An unknown error ocurred."
+        end
+      end
+    end
+    
     
     
     def self.find_by_id(lock_id)
