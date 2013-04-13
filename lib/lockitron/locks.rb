@@ -88,10 +88,12 @@ module Lockitron
       RestClient.post url, :access_token => access_token do |response|
         if response.code == 200
           
-          data = JSON.load response
+          data = JSON.parse(response.to_str)
           lockdata = data["lock"]
           
           puts "Got the status!"
+          puts data
+          puts "Line 2!"
           puts lockdata
           # puts response["lock"].["status"]
           # puts response.lock
